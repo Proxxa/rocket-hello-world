@@ -38,7 +38,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/rocket-hello-world:latest
       -
-        name: Alpine
+        name: Busybox
         uses: docker/build-push-action@v5
         with:
           context: .
