@@ -1,9 +1,8 @@
 FROM rust:alpine AS builder
 
 RUN apk update && \
-    apk add binutils build-base ca-certificates \
-    curl file g++ gcc libressl-dev make patch \
-    postgresql rust sqlite
+    apk add build-base \
+    file g++ gcc libressl-dev make patch rust
 
 
 WORKDIR /usr/src/rocket-hello-world
@@ -13,12 +12,7 @@ RUN \
     --mount=type=cache,target=/var/cache/cargo \
     cargo install --path .
 
-FROM alpine:latest
-#RUN \
-#    --mount=type=cache,target=/var/cache/apt\
-#    apt-get update && \
-#    apt-get install -y libc-bin && \
-#    rm -rf /var/lib/apt/lists/*
+FROM alpine
 
 COPY --from=builder /usr/local/cargo/bin/rocket-hello-world /usr/local/bin/rocket-hello-world
 
